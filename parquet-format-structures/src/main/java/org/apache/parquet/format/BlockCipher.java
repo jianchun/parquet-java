@@ -53,6 +53,17 @@ public interface BlockCipher {
     byte[] decrypt(byte[] lengthAndCiphertext, byte[] AAD);
 
     /**
+     * Decrypts the ciphertext stored in a buffer.
+     *
+     * @param buffer The buffer containing the length and ciphertext.
+     * @param offset The offset in the buffer where ciphertext length and ciphertext starts.
+     * @param length The length of the buffer following offset for the ciphertext length and ciphertext.
+     * @param AAD   - Additional Authenticated Data for the decryption (ignored in case of CTR cipher)
+     * @return plaintext - starts at offset 0 of the output, and fills up the entire byte array.
+     */
+    byte[] decryptBuffer(byte[] buffer, int offset, int length, byte[] AAD);
+
+    /**
      * Convenience decryption method that reads the length and ciphertext from a ByteBuffer
      *
      * @param from ByteBuffer with length and ciphertext.

@@ -42,10 +42,14 @@ public class AesGcmDecryptor extends AesCipher implements BlockCipher.Decryptor 
 
   @Override
   public byte[] decrypt(byte[] lengthAndCiphertext, byte[] AAD) {
-    int cipherTextOffset = SIZE_LENGTH;
-    int cipherTextLength = lengthAndCiphertext.length - SIZE_LENGTH;
+    return decryptBuffer(lengthAndCiphertext, 0, lengthAndCiphertext.length, AAD);
+  }
 
-    return decrypt(lengthAndCiphertext, cipherTextOffset, cipherTextLength, AAD);
+  @Override
+  public byte[] decryptBuffer(byte[] buffer, int offset, int length, byte[] AAD) {
+    int cipherTextOffset = offset + SIZE_LENGTH;
+    int cipherTextLength = length - SIZE_LENGTH;
+    return decrypt(buffer, cipherTextOffset, cipherTextLength, AAD);
   }
 
   public byte[] decrypt(byte[] ciphertext, int cipherTextOffset, int cipherTextLength, byte[] AAD) {
